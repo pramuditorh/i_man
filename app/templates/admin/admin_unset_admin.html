@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User: {{ users.username }} is removed as admin.</h1>
+    <p>
+    <a href="{{ url_for('admin.admin_user') }}">Back</a>
+    </p>
+{% endblock %}

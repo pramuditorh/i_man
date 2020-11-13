@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form action="" method="POST" enctype="multipart/form-data" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.type.label }} <br>
+            {{ form.type }} <br>
+            {% for error in form.type.errors %}
+                <span style="color:red">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.capacity.label }} <br>
+            {{ form.capacity(size=32) }} <br>
+            {% for error in form.capacity.errors %}
+                <span style="color:red">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.note.label }} <br>
+            {{ form.note(size=32) }} <br>
+            {% for error in form.note.errors %}
+                <span style="color:red">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        {% if '/takeout' in request.path %}
+            {% if item.in_url_record_of_transfer == '-' %}
+                <div>
+                    <p>Berita Acara:</p>
+                    -
+                </div>
+            {% else %}
+                <div>
+                    <p>Berita Acara Masuk:</p>
+                    <img src="{{ item.in_url_record_of_transfer }}" alt="{{ item.in_filename_record_of_transfer }}" style="width:600px;height:450px;">
+                </div>
+            {% endif %}
+            <p>
+                {{ form.out_record_of_transfer.label }} <br>
+                {{ form.out_record_of_transfer(size=32) }} <br>
+                {% for error in form.out_record_of_transfer.errors %}
+                    <span style="color:red">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+        {% else %}
+            <p>
+                {{ form.in_record_of_transfer.label }} <br>
+                {{ form.in_record_of_transfer(size=32) }} <br>
+                {% for error in form.in_record_of_transfer.errors %}
+                    <span style="color:red">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+        {% endif %}
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}

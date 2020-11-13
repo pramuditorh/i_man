@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title>{{ title }} - Inventory Management</title>
+    {% else %}
+        <title>Welcome to Inventory Management</title>
+    {% endif %}
+    
+</head>
+<style>
+    .navbar-right {
+        float: right;
+    }
+</style>
+<body>
+    <div>I-MAN:
+        {% if current_user.is_anonymous %}
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}">Register</a>
+        {% elif current_user.is_admin == True %}
+            <a href="{{ url_for('main.input') }}">Input</a>
+            <a href="{{ url_for('main.takeout') }}">Takeout</a>
+            <a href="{{ url_for('admin.admin_user') }}">Manage User</a>
+            <div class="navbar-right">
+                <a href="{{ url_for('admin.admin') }}" class="user">admin {{current_user.username}}</a>
+                <a href="{{ url_for('auth.logout') }}" class="user">Logout</a>
+            </div>
+        {% else %}
+            <a href="{{ url_for('main.input') }}">Input</a>
+            <a href="{{ url_for('main.takeout') }}">Takeout</a>
+            <div class="navbar-right">
+                <a href="{{ url_for('admin.admin') }}" class="user">{{current_user.username}}</a>
+                <a href="{{ url_for('auth.logout') }}" class="user">Logout</a>
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %}
+    {% endblock%}
+</body>
+</html>

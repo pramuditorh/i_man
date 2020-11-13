@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.is_anonymous %}
+        <h1>Welcome to I-MAN</h1>
+        <p>Please, login first</p>
+    {% elif current_user.is_admin %}
+        <h1>Hello, admin {{ current_user.name }}</h1>
+        <h1>Welcome to I-MAN</h1>
+    {% endif %}
+    <p>Made with &hearts; by <a href="https://github.com/pramuditorh">@pramuditorh</a></p>
+{% endblock%}
